@@ -1,5 +1,17 @@
 import os
 import shutil
+import argparse
+import main_native_linux
+
+#Permette di inserire un percorso della cartella di steam custom
+parser = argparse.ArgumentParser()
+parser.add_argument('--manual', help='Manual path for Steam common folder')
+args = parser.parse_args()
+
+if args.manual:
+    starting_directory = args.manual
+else:
+    starting_directory = os.path.join(os.path.expanduser("~"), ".steam", "steam", "steamapps", "common")
 
 def find_and_rename_dll(directory):
     for root, dirs, files in os.walk(directory):
@@ -44,43 +56,73 @@ def list_directories(directory):
             directories.append(entry)
     return directories
 
-def main():
-    #Dichiara il percorso della cartella di steam contenente i giochi
-    starting_directory = os.path.join(os.path.expanduser("~"), ".steam", "steam", "steamapps", "common")
+def menu():
+    install = 0
 
     #Menu scelta tra installare e disinstallare il programma
-    print("What do you want to do?")
-    print("1. Install the DLL files")
-    print("2. Uninstall the DLL files")
-    choice = input("Select an option: ")
-    if choice == "1":
-        install = True
-    elif choice == "2":
-        install = False
+    print("Welcome to Unlockerator Installer!")
+    print("Please choose an option:")
+    print("1. Install for Native games")
+    print("2. Install/Uninstall for Proton games")
+
+    choice = input("Enter your choice (1/2): ")
+
+    if choice == '1':
+        main_native_linux.main()
+        install = 0
+
+    elif choice == '2':
+        print("Please choose an option:")
+        print("1. Install for Proton games")
+        print("2. Uninstall for Proton games")
+
+        choice = input("Enter your choice (1/2): ")
+
+        if choice == '1':
+            install = 1
+        else:
+            install = 2
+
     else:
-        print("Invalid choice. Exiting the program.")
-        return
+        print("Invalid choice. Exiting...")
+        exit(1)
 
-    print("-----------------------------------------------------------------------------")
+    return install
 
-    #Mostra all'utente i giochi e chiede su quale lavorare
-    print("Directories present in the initial folder:")
+def print_directories(directories):
     directories = list_directories(starting_directory)
+    print("Directories present in the initial folder:")
     for i, d in enumerate(directories, start=1):
         print(f"{i}. {d}")
     selected_index = int(input("Select the number of the folder of interest: "))
 
     #Imposta la direttoria del gioco su cui eseguire il lavoro
     selected_directory = directories[selected_index - 1]
+    return selected_directory
 
-    if install == True:
+def main():
+    #Stampa il menu e assegna la scelta nella variabile install
+    install = menu()
+
+    #Mostra all'utente i giochi e chiede su quale lavorare
+    if install == 1:
+        #Array contenente tutte le cartelle presenti al percorso di steamapps/common
+        directories = list_directories(starting_directory)
+
+        #Mostra le direttorie e chiede all'utente quale selezionare
+        selected_directory = print_directories(directories)
+
         find_and_rename_dll(os.path.join(starting_directory, selected_directory))
-    else:
-        find_and_reset_dll(os.path.join(starting_directory, selected_directory))
+    elif install == 2:
+        #Array contenente tutte le cartelle presenti al percorso di steamapps/common
+        directories = list_directories(starting_directory)
 
+        #Mostra le direttorie e chiede all'utente quale selezionare
+        selected_directory = print_directories(directories)
+
+        find_and_reset_dll(os.path.join(starting_directory, selected_directory))
     #Fine
     print("Operation completed successfully!")
-
 
 if __name__ == "__main__":
     main()
