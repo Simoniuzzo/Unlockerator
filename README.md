@@ -1,6 +1,6 @@
 # Unlockerator
 
-Unlockerator is a tool that allows you to unlock DLCs for games on Steam, on both Windows and Linux.
+Unlockerator is a tool that allows you to unlock DLCs for games on Steam, on both Windows and Linux(Proton/Native).
 
 ## Features
 
@@ -12,15 +12,22 @@ Unlockerator is a tool that allows you to unlock DLCs for games on Steam, on bot
 
 To use Unlockerator, download the latest version from the [GitHub Releases section](https://github.com/Simoniuzzo/Unlockerator/releases), and simply run it!
 
+- ### Linux 
+  - For manual path(native games) > `./Unlockerator_Linux --manual "path/to/steam/steamapps/directory/"`
+  - For manual path(proton games) > `./Unlockerator_Linux --manual "path/to/steam/common/directory/"`
+  - This will be fixed in the next patch :)
+
+- ### Windows 
+  - Just follow the instructions on screen!
+
 ## Acknowledgements
 
 I would like to thank the creators of the [@acidicoala/SmokeAPI](https://github.com/acidicoala/SmokeAPI) project for their DLLs that I have used in my program.
 
-## Todo List
+## TODO List
 
-- Add support for the Windows version
-- Add support for native Linux games
-- Add support for game installations in the non-default directory 
+- Optimize the code
+- GUI?
 - Implement other features in the future
 
 > [!NOTE]
