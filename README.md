@@ -5,8 +5,8 @@ Unlockerator is a tool that allows you to unlock DLCs for games on Steam, on bot
 ## Features
 
 - Installation and uninstallation of DLC "unlocks"
-- Compatibility only with the non-Flatpack/Snap version of Steam (original version)
-- Support only for games that use Proton (not native Linux games), but support for native Linux games will be added in the future!
+- ~Compatibility only with the non-Flatpack/Snap version of Steam (original version)~
+- ~Support only for games that use Proton (not native Linux games), but support for native Linux games will be added in the future!~
 
 ## Usage
 
